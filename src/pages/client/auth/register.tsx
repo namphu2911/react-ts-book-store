@@ -3,6 +3,7 @@ import { Button, Form, Input, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import 'styles/register.scss';
+import { loginAPI } from '@/services/api';
 
 interface FieldType {
     fullName?: string;
@@ -10,11 +11,16 @@ interface FieldType {
     password?: string;
     phone?: number;
 }
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-};
+
 const RegisterPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
+
+    const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+        console.log('Success:', values);
+
+        const res = await loginAPI("values.email", "values.password");
+    };
+
     return (
         <div className="register-page">
             <main className="main">
