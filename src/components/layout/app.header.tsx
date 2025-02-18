@@ -4,7 +4,7 @@ const AppHeader = () => {
     const { user } = useCurrentApp();
     return (
         <>
-            {JSON.stringify(user)}
+            Header co user: {JSON.stringify(user)}
         </>
     )
 }
