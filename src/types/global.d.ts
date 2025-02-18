@@ -31,8 +31,8 @@ declare global {
     }
 
     interface IRegister {
+        _id: string;
         email: string;
         fullName: string;
-        _id: string;
     }
 }

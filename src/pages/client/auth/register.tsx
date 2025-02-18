@@ -1,24 +1,33 @@
 import type { FormProps } from 'antd';
-import { Button, Form, Input, Divider } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Form, Input, Divider, App } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import 'styles/register.scss';
-import { loginAPI } from '@/services/api';
+import { registerAPI } from '@/services/api';
 
 interface FieldType {
-    fullName?: string;
-    email?: string;
-    password?: string;
-    phone?: number;
+    fullName: string;
+    email: string;
+    password: string;
+    phone: number;
 }
 
 const RegisterPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
+    const { message } = App.useApp();
+    const navigate = useNavigate();
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-        console.log('Success:', values);
-
-        const res = await loginAPI("values.email", "values.password");
+        setIsSubmit(true);
+        const { fullName, email, password, phone } = values;
+        const res = await registerAPI(fullName, email, password, phone);
+        if (res.data) {
+            message.success("Đăng ký User thành công!");
+            navigate("/login");
+        } else {
+            message.error(JSON.stringify(res.data));
+        }
+        setIsSubmit(false);
     };
 
     return (
