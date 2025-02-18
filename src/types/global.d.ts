@@ -21,12 +21,12 @@ declare global {
     interface ILogin {
         access_token: string;
         user: {
+            id: string;
+            fullName: string;
             email: string;
             phone: string;
-            fullName: string;
             role: string;
             avatar: string;
-            id: string;
         }
     }
 
@@ -34,5 +34,14 @@ declare global {
         _id: string;
         email: string;
         fullName: string;
+    }
+
+    interface IUser {
+        id: string;
+        fullName: string;
+        email: string;
+        phone: string;
+        role: string;
+        avatar: string;
     }
 }
