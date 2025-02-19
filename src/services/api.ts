@@ -17,6 +17,11 @@ const registerAPI = (fullName: string, email: string, password: string, phone: n
     return axios.post<IBackendRes<IRegister>>(urlBackend, data);
 }
 
+const logoutAPI = () => {
+    const urlBackend = "/api/v1/auth/logout";
+    return axios.post<IBackendRes<ILogin>>(urlBackend);
+}
+
 const fetchAccountAPI = () => {
     const urlBackend = "/api/v1/auth/account";
     return axios.get<IBackendRes<IFetchAccount>>(urlBackend, {
@@ -27,5 +32,5 @@ const fetchAccountAPI = () => {
 }
 
 export {
-    loginAPI, registerAPI, fetchAccountAPI
+    loginAPI, registerAPI, logoutAPI, fetchAccountAPI
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useCurrentApp } from "components/context/app.context.tsx";
 import { Button, Result } from "antd";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface IProps {
     children: React.ReactNode;
@@ -16,9 +17,12 @@ const ProtectedRoute = (props: IProps) => {
         return (
             <Result
                 status="404"
-                title="404"
-                subTitle="Xin lỗi, bạn chưa đăng nhập để truy cập trang này!"
-                extra={<Button type="primary">Back Home</Button>}
+                title="Not Login"
+                subTitle="Bạn cần đăng nhập để sử dụng tính năng này!"
+                extra={
+                    <Button type="primary">
+                        <Link to="/login">Đăng Nhập</Link>
+                    </Button>}
             />
         )
     }
@@ -30,9 +34,12 @@ const ProtectedRoute = (props: IProps) => {
             return (
                 <Result
                     status="403"
-                    title="403"
-                    subTitle="Xin lỗi, bạn không có quyền hạn để truy cập trang này!"
-                    extra={<Button type="primary">Back Home</Button>}
+                    title="Not Authorization"
+                    subTitle="Tài khoản của bạn không có quyền hạn truy cập trang này!"
+                    extra={
+                        <Button type="primary">
+                            <Link to="/">Back Home</Link>
+                        </Button>}
                 />
             )
         }

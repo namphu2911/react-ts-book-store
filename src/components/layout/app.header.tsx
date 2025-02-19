@@ -7,14 +7,22 @@ import { VscSearchFuzzy } from "react-icons/vsc";
 import { Avatar, Badge, Divider, Drawer, Dropdown, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import 'styles/app.header.scss'
+import { logoutAPI } from "services/api";
 
 const AppHeader = () => {
-    const { user, isAuthenticated } = useCurrentApp();
+    const { user, setUser, isAuthenticated, setIsAuthenticated } = useCurrentApp();
     const [openDrawer, setOpenDrawer] = useState(false)
     const navigate = useNavigate();
+
     const handleLogout = async () => {
-        //todo
+        const res = await logoutAPI();
+        if (res.data) {
+            setUser(null);
+            setIsAuthenticated(false);
+            localStorage.removeItem('access_token');
+        }
     }
+
     let items = [
         {
             label: <label
@@ -139,7 +147,7 @@ const AppHeader = () => {
             >
                 <p>Quản lý tài khoản</p>
                 <Divider />
-                <p>Đăng xuất</p>
+                <p onClick={() => handleLogout()}>Đăng xuất</p>
                 <Divider />
             </Drawer>
         </>

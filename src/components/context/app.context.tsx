@@ -8,7 +8,7 @@ interface IAppContext {
     isLoading: boolean;
     setIsLoading: (value: boolean) => void;
     user: IUser | null;
-    setUser: (value: IUser) => void;
+    setUser: (value: IUser | null) => void;
 }
 
 const CurrentAppContext = createContext<IAppContext | null>(null);
