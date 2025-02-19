@@ -146,7 +146,7 @@ const LayoutAdmin = () => {
                         <Outlet />
                     </Content>
                     <Footer style={{ padding: 0, textAlign: "center" }}>
-                        React Test Fresher &copy; Edan Nguyễn - Made with <HeartTwoTone />
+                        Book Strore &copy; Phu.nn - Made with <HeartTwoTone />
                     </Footer>
                 </Layout>
             </Layout>

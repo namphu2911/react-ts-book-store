@@ -91,7 +91,7 @@ const AppHeader = () => {
                         }}>☰</div>
                         <div className='page-header__logo'>
                             <span className='logo'>
-                                <span onClick={() => navigate('/')}> <FaReact className='rotate icon-react' />Edan Shop</span>
+                                <span onClick={() => navigate('/')}> <FaReact className='rotate icon-react' />Book Store</span>
                                 <VscSearchFuzzy className='icon-search' />
                             </span>
                             <input

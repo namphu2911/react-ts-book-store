@@ -31,6 +31,11 @@ const fetchAccountAPI = () => {
     });
 }
 
+const getUsersAPI = (current: number, pageSize: number) => {
+    const urlBackend = `/api/v1/user?current=${current}&pageSize=${pageSize}`;
+    return axios.get<IBackendRes<IModelPaginate<IUserTable>>>(urlBackend);
+}
+
 export {
-    loginAPI, registerAPI, logoutAPI, fetchAccountAPI
+    loginAPI, registerAPI, logoutAPI, fetchAccountAPI, getUsersAPI
 }
