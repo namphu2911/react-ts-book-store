@@ -7,7 +7,7 @@ import { dateRangeValidate } from "services/helper.ts";
 import UserDetail from "components/admin/user/detail.user";
 import CreateUser from "components/admin/user/create.user";
 import ImportUser from "components/admin/user/data/import.user";
-
+import { CSVLink } from "react-csv";
 
 interface ISearch {
     fullName: string;
@@ -25,6 +25,8 @@ const TableUser = () => {
     const [dataUser, setDataUser] = useState<IUserTable | null>(null);
     const [openModalCreate, setOpenModalCreate] = useState(false);
     const [openModalImport, setOpenModalImport] = useState(false);
+    const [currentDataTable, setCurrentDataTable] = useState<IUserTable[]>([]);
+
 
     const [meta, setMeta] = useState({
         current: 1,
@@ -176,6 +178,7 @@ const TableUser = () => {
                     const res = await getUsersAPI(query);
                     if (res.data) {
                         setMeta(res.data.meta);
+                        setCurrentDataTable(res.data?.result ?? []);
                     }
                     return {
                         data: res.data?.result,
@@ -206,7 +209,12 @@ const TableUser = () => {
                         icon={<ExportOutlined />}
                         type="primary"
                     >
-                        Export
+                        <CSVLink
+                            data={currentDataTable}
+                            filename={"user-data-export.csv"}
+                        >
+                            Export
+                        </CSVLink>
                     </Button>,
                     <Button
                         key="button"
