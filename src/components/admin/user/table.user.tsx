@@ -5,6 +5,7 @@ import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
 import { getUsersAPI } from "services/api.ts";
 import { dateRangeValidate } from "services/helper.ts";
 import UserDetail from "components/admin/user/detail.user.tsx";
+import CreateUser from "./create.user";
 
 
 interface ISearch {
@@ -21,6 +22,8 @@ const TableUser = () => {
     const actionRef = useRef<ActionType>();
     const [openDrawer, setOpenDrawer] = useState(false);
     const [dataUser, setDataUser] = useState<IUserTable | null>(null);
+    const [openModalCreate, setOpenModalCreate] = useState(false);
+
     const [meta, setMeta] = useState({
         current: 1,
         pageSize: 5,
@@ -122,6 +125,10 @@ const TableUser = () => {
         }
     ];
 
+    const refreshTable = () => {
+        actionRef.current?.reload();
+    }
+
     return (
         <>
             <ProTable<IUserTable, ISearch>
@@ -151,7 +158,7 @@ const TableUser = () => {
                             query += `&createdAt>=${updateDateRange[0]}&createdAt<=${updateDateRange[1]}`
                         }
                     }
-
+                    query += `&sort=-createdAt`
                     if (sort && sort.createdAt) {
                         query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
                     }
@@ -191,7 +198,7 @@ const TableUser = () => {
                         key="button"
                         icon={<PlusOutlined />}
                         onClick={() => {
-                            actionRef.current?.reload();
+                            setOpenModalCreate(true);
                         }}
                         type="primary"
                     >
@@ -201,6 +208,11 @@ const TableUser = () => {
                 search={{
                     defaultCollapsed: false,
                 }}
+            />
+            <CreateUser
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
+                refreshTable={refreshTable}
             />
             <UserDetail
                 openDrawer={openDrawer}
