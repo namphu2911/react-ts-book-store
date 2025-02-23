@@ -60,4 +60,10 @@ declare global {
         createdAt: Date,
         updatedAt: Date,
     }
+
+    interface IResponseImport {
+        countSuccess: 3,
+        countError: 0,
+        detail: any
+    }
 }

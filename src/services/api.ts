@@ -42,6 +42,17 @@ const createUserAPI = (fullName: string, email: string, password: string, phone:
     return axios.post<IBackendRes<IRegister>>(urlBackend, data);
 }
 
+const bulkCreateUserAPI = (
+    data: {
+        fullName: string,
+        email: string,
+        password: string,
+        phone: number,
+    }[]) => {
+    const urlBackend = "/api/v1/user/bulk-create";
+    return axios.post<IBackendRes<IResponseImport>>(urlBackend, data);
+}
+
 export {
-    loginAPI, registerAPI, logoutAPI, fetchAccountAPI, getUsersAPI, createUserAPI
+    loginAPI, registerAPI, logoutAPI, fetchAccountAPI, getUsersAPI, createUserAPI, bulkCreateUserAPI
 }

@@ -1,11 +1,12 @@
 import { ActionType, ProColumns, ProTable } from "@ant-design/pro-components";
 import { Button } from "antd";
 import { useRef, useState } from "react";
-import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
+import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined } from "@ant-design/icons";
 import { getUsersAPI } from "services/api.ts";
 import { dateRangeValidate } from "services/helper.ts";
-import UserDetail from "components/admin/user/detail.user.tsx";
-import CreateUser from "./create.user";
+import UserDetail from "components/admin/user/detail.user";
+import CreateUser from "components/admin/user/create.user";
+import ImportUser from "components/admin/user/data/import.user";
 
 
 interface ISearch {
@@ -23,6 +24,7 @@ const TableUser = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const [dataUser, setDataUser] = useState<IUserTable | null>(null);
     const [openModalCreate, setOpenModalCreate] = useState(false);
+    const [openModalImport, setOpenModalImport] = useState(false);
 
     const [meta, setMeta] = useState({
         current: 1,
@@ -158,12 +160,17 @@ const TableUser = () => {
                             query += `&createdAt>=${updateDateRange[0]}&createdAt<=${updateDateRange[1]}`
                         }
                     }
-                    query += `&sort=-createdAt`
+
+
                     if (sort && sort.createdAt) {
                         query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
+                    } else {
+                        query += `&sort=-createdAt`
                     }
                     if (sort && sort.updatedAt) {
                         query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
+                    } else {
+                        query += `&sort=-updatedAt`
                     }
 
                     const res = await getUsersAPI(query);
@@ -196,6 +203,23 @@ const TableUser = () => {
                 toolBarRender={() => [
                     <Button
                         key="button"
+                        icon={<ExportOutlined />}
+                        type="primary"
+                    >
+                        Export
+                    </Button>,
+                    <Button
+                        key="button"
+                        icon={<CloudUploadOutlined />}
+                        onClick={() => {
+                            setOpenModalImport(true);
+                        }}
+                        type="primary"
+                    >
+                        Import
+                    </Button>,
+                    <Button
+                        key="button"
                         icon={<PlusOutlined />}
                         onClick={() => {
                             setOpenModalCreate(true);
@@ -208,6 +232,11 @@ const TableUser = () => {
                 search={{
                     defaultCollapsed: false,
                 }}
+            />
+            <ImportUser
+                openModalImport={openModalImport}
+                setOpenModalImport={setOpenModalImport}
+                refreshTable={refreshTable}
             />
             <CreateUser
                 openModalCreate={openModalCreate}

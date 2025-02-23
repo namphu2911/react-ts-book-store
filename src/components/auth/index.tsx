@@ -1,5 +1,5 @@
 import React from "react";
-import { useCurrentApp } from "components/context/app.context.tsx";
+import { useCurrentApp } from "components/context/app.context";
 import { Button, Result } from "antd";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
