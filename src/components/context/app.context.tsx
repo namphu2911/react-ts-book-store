@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fetchAccountAPI } from "services/api";
-import { PacmanLoader } from "react-spinners";
+import { PuffLoader } from "react-spinners";
 
 interface IAppContext {
     isAuthenticated: boolean;
@@ -51,8 +51,8 @@ const AppProvider = (props: IProps) => {
                     left: "50%",
                     transform: "translate(-50%, -50%)"
                 }}>
-                    <PacmanLoader
-                        size={30}
+                    <PuffLoader
+                        size={200}
                         color="#36d6b4"
                     />
                 </div>

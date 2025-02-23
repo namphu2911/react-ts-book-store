@@ -3,6 +3,17 @@ import { Button } from "antd";
 import { useRef, useState } from "react";
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
 import { getUsersAPI } from "services/api.ts";
+import { dateRangeValidate } from "services/helper.ts";
+
+interface ISearch {
+    fullName: string;
+    email: string;
+    phone: string;
+    createdAt: string;
+    createdAtRange: string;
+    updatedAt: string;
+    updatedAtRange: string;
+}
 
 const columns: ProColumns<IUserTable>[] = [
     {
@@ -49,14 +60,28 @@ const columns: ProColumns<IUserTable>[] = [
     {
         title: 'Created At',
         dataIndex: 'createdAt',
-        copyable: true,
-        ellipsis: true,
+        valueType: 'date',
+        sorter: true,
+        hideInSearch: true
+    },
+    {
+        title: 'Created At',
+        dataIndex: 'createdAtRange',
+        valueType: 'dateRange',
+        hideInTable: true,
     },
     {
         title: 'Updated At',
         dataIndex: 'updatedAt',
-        copyable: true,
-        ellipsis: true,
+        valueType: 'date',
+        sorter: true,
+        hideInSearch: true
+    },
+    {
+        title: 'Updated At',
+        dataIndex: 'updatedAtRange',
+        valueType: 'dateRange',
+        hideInTable: true
     },
     {
         title: 'Action',
@@ -89,13 +114,42 @@ const TableUser = () => {
 
     return (
         <>
-            <ProTable<IUserTable>
+            <ProTable<IUserTable, ISearch>
                 columns={columns}
                 actionRef={actionRef}
                 cardBordered
                 request={async (params, sort, filter) => {
                     console.log(params, sort, filter);
-                    const res = await getUsersAPI(params?.current ?? 1, params?.pageSize ?? 5);
+                    let query = "";
+                    if (params) {
+                        query += `current=${params.current}&pageSize=${params.pageSize}`
+                        if (params.email) {
+                            query += `&email=/${params.email}/i`
+                        }
+                        if (params.fullName) {
+                            query += `&fullName=/${params.fullName}/i`
+                        }
+                        if (params.phone) {
+                            query += `&phone=/${params.phone}/i`
+                        }
+                        const createDateRange = dateRangeValidate(params.createdAtRange);
+                        if (createDateRange) {
+                            query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`
+                        }
+                        const updateDateRange = dateRangeValidate(params.updatedAtRange);
+                        if (updateDateRange) {
+                            query += `&createdAt>=${updateDateRange[0]}&createdAt<=${updateDateRange[1]}`
+                        }
+                    }
+
+                    if (sort && sort.createdAt) {
+                        query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
+                    }
+                    if (sort && sort.updatedAt) {
+                        query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
+                    }
+
+                    const res = await getUsersAPI(query);
                     if (res.data) {
                         setMeta(res.data.meta);
                     }
@@ -134,6 +188,9 @@ const TableUser = () => {
                         Add new
                     </Button>
                 ]}
+                search={{
+                    defaultCollapsed: false,
+                }}
             />
         </>
     );
