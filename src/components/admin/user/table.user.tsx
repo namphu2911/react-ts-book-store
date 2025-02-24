@@ -8,6 +8,7 @@ import UserDetail from "components/admin/user/detail.user";
 import CreateUser from "components/admin/user/create.user";
 import ImportUser from "components/admin/user/data/import.user";
 import { CSVLink } from "react-csv";
+import UpdateUser from "components/admin/user/update.user";
 
 interface ISearch {
     fullName: string;
@@ -23,8 +24,10 @@ const TableUser = () => {
     const actionRef = useRef<ActionType>();
     const [openDrawer, setOpenDrawer] = useState(false);
     const [dataUser, setDataUser] = useState<IUserTable | null>(null);
+    const [dataUpdateUser, setDataUpdateUser] = useState<IUserTable | null>(null);
     const [openModalCreate, setOpenModalCreate] = useState(false);
     const [openModalImport, setOpenModalImport] = useState(false);
+    const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [currentDataTable, setCurrentDataTable] = useState<IUserTable[]>([]);
 
 
@@ -112,12 +115,16 @@ const TableUser = () => {
         {
             title: 'Action',
             hideInSearch: true,
-            render() {
+            render(_, entity) {
                 return (
                     <>
                         <EditTwoTone
                             twoToneColor="#f57800"
                             style={{ cursor: "pointer", marginRight: 15 }}
+                            onClick={() => {
+                                setOpenModalUpdate(true);
+                                setDataUpdateUser(entity);
+                            }}
                         />
                         <DeleteTwoTone
                             twoToneColor="#ff4d4f"
@@ -162,7 +169,6 @@ const TableUser = () => {
                             query += `&createdAt>=${updateDateRange[0]}&createdAt<=${updateDateRange[1]}`
                         }
                     }
-
 
                     if (sort && sort.createdAt) {
                         query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
@@ -249,6 +255,13 @@ const TableUser = () => {
             <CreateUser
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}
+                refreshTable={refreshTable}
+            />
+            <UpdateUser
+                openModalUpdate={openModalUpdate}
+                setOpenModalUpdate={setOpenModalUpdate}
+                dataUpdateUser={dataUpdateUser}
+                setDataUpdateUser={setDataUpdateUser}
                 refreshTable={refreshTable}
             />
             <UserDetail
