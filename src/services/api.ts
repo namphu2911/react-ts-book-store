@@ -64,6 +64,13 @@ const deleteUserAPI = (_id: string) => {
     return axios.delete<IBackendRes<IRegister>>(urlBackend)
 }
 
+const getBooksAPI = (query: string) => {
+    const urlBackend = `/api/v1/book?${query}`;
+    return axios.get<IBackendRes<IModelPaginate<IBookTable>>>(urlBackend)
+}
+
 export {
-    loginAPI, registerAPI, logoutAPI, fetchAccountAPI, getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI
+    loginAPI, registerAPI, logoutAPI, fetchAccountAPI,
+    getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI,
+    getBooksAPI
 }
