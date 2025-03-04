@@ -101,8 +101,18 @@ const createBookAPI = (
     return axios.post<IBackendRes<IBookTable>>(urlBackend, data);
 }
 
+const updateBookAPI = (
+    _id: string, mainText: string, author: string,
+    price: number, quantity: number,
+    category: string, thumbnail: string, slider: string[]
+) => {
+    const data = { mainText, author, price, quantity, category, thumbnail, slider, sold: 22 }
+    const urlBackend = `/api/v1/book/${_id}`;
+    return axios.put<IBackendRes<IBookTable>>(urlBackend, data);
+}
+
 export {
     loginAPI, registerAPI, logoutAPI, fetchAccountAPI,
     getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI,
-    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI
+    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI
 }

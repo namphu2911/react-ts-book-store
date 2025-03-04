@@ -7,6 +7,7 @@ import { dateRangeValidate } from "services/helper.ts";
 import { CSVLink } from "react-csv";
 import CreateBook from "components/admin/book/create.book";
 import BookDetail from "components/admin/book/detail.book";
+import UpdateBook from "components/admin/book/update.book";
 
 interface ISearch {
     mainText: string;
@@ -25,12 +26,12 @@ const TableBook = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const [dataBook, setDataBook] = useState<IBookTable | null>(null);
 
-    //const [dataUpdateUser, setDataUpdateUser] = useState<IUserTable | null>(null);
+    const [dataUpdateBook, setDataUpdateBook] = useState<IBookTable | null>(null);
 
     const [openModalCreate, setOpenModalCreate] = useState(false);
 
     //const [openModalImport, setOpenModalImport] = useState(false);
-    //const [openModalUpdate, setOpenModalUpdate] = useState(false);
+    const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [currentDataTable, setCurrentDataTable] = useState<IBookTable[]>([]);
     //const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
     //const { message, notification } = App.useApp();
@@ -158,8 +159,8 @@ const TableBook = () => {
                             twoToneColor="#f57800"
                             style={{ cursor: "pointer", marginRight: 15 }}
                             onClick={() => {
-                                //setOpenModalUpdate(true);
-                                //setDataUpdateUser(entity);
+                                setOpenModalUpdate(true);
+                                setDataUpdateBook(entity);
                             }}
                         />
                         <Popconfirm
@@ -319,6 +320,13 @@ const TableBook = () => {
                 setOpenDrawer={setOpenDrawer}
                 dataBook={dataBook}
                 setDataBook={setDataBook}
+            />
+            <UpdateBook
+                dataUpdateBook={dataUpdateBook}
+                setDataUpdateBook={setDataUpdateBook}
+                openModalUpdate={openModalUpdate}
+                setOpenModalUpdate={setOpenModalUpdate}
+                refreshTable={refreshTable}
             />
         </>
     );
