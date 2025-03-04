@@ -3,7 +3,7 @@ import { Button, Form, Input, Divider, App } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import 'styles/register.scss';
-import { registerAPI } from '@/services/api';
+import { registerAPI } from 'services/api';
 
 interface FieldType {
     fullName: string;
