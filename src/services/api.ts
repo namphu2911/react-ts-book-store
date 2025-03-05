@@ -111,8 +111,13 @@ const updateBookAPI = (
     return axios.put<IBackendRes<IBookTable>>(urlBackend, data);
 }
 
+const deleteBookAPI = (_id: string) => {
+    const urlBackend = `/api/v1/book/${_id}`;
+    return axios.delete<IBackendRes<IBookTable>>(urlBackend)
+}
+
 export {
     loginAPI, registerAPI, logoutAPI, fetchAccountAPI,
     getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI,
-    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI
+    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI, deleteBookAPI
 }

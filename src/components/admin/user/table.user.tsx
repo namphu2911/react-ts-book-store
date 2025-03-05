@@ -194,7 +194,7 @@ const TableUser = () => {
                         }
                         const updateDateRange = dateRangeValidate(params.updatedAtRange);
                         if (updateDateRange) {
-                            query += `&createdAt>=${updateDateRange[0]}&createdAt<=${updateDateRange[1]}`
+                            query += `&updatedAt>=${updateDateRange[0]}&updatedAt<=${updateDateRange[1]}`
                         }
                     }
 
@@ -238,18 +238,17 @@ const TableUser = () => {
                 dateFormatter="string"
                 headerTitle="Table user"
                 toolBarRender={() => [
-                    <Button
-                        key="button"
-                        icon={<ExportOutlined />}
-                        type="primary"
+                    <CSVLink
+                        data={currentDataTable}
+                        filename={"user-data-export.csv"}
                     >
-                        <CSVLink
-                            data={currentDataTable}
-                            filename={"user-data-export.csv"}
+                        <Button
+                            icon={<ExportOutlined />}
+                            type="primary"
                         >
                             Export
-                        </CSVLink>
-                    </Button>,
+                        </Button>
+                    </CSVLink>,
                     <Button
                         key="button"
                         icon={<CloudUploadOutlined />}

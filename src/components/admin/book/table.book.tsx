@@ -1,8 +1,8 @@
 import { ActionType, ProColumns, ProTable } from "@ant-design/pro-components";
-import { Button, Popconfirm } from "antd";
+import { App, Button, Popconfirm } from "antd";
 import { useRef, useState } from "react";
-import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined } from "@ant-design/icons";
-import { getBooksAPI } from "services/api.ts";
+import { DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined } from "@ant-design/icons";
+import { deleteBookAPI, getBooksAPI } from "services/api.ts";
 import { dateRangeValidate } from "services/helper.ts";
 import { CSVLink } from "react-csv";
 import CreateBook from "components/admin/book/create.book";
@@ -25,16 +25,12 @@ const TableBook = () => {
     const actionRef = useRef<ActionType>();
     const [openDrawer, setOpenDrawer] = useState(false);
     const [dataBook, setDataBook] = useState<IBookTable | null>(null);
-
     const [dataUpdateBook, setDataUpdateBook] = useState<IBookTable | null>(null);
-
     const [openModalCreate, setOpenModalCreate] = useState(false);
-
-    //const [openModalImport, setOpenModalImport] = useState(false);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [currentDataTable, setCurrentDataTable] = useState<IBookTable[]>([]);
-    //const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
-    //const { message, notification } = App.useApp();
+    const [isDeleteBook, setIsDeleteBook] = useState<boolean>(false);
+    const { message, notification } = App.useApp();
 
     const [meta, setMeta] = useState({
         current: 1,
@@ -43,21 +39,21 @@ const TableBook = () => {
         total: 0
     });
 
-    // const handleDeleteUser = async (_id: string) => {
-    //     setIsDeleteUser(true);
-    //     const res = await deleteUserAPI(_id);
-    //     if (res.data) {
-    //         message.success("Xóa User thành công!");
-    //         refreshTable();
-    //     } else {
-    //         notification.error({
-    //             message: "Xóa user thất bại",
-    //             description: res.message,
-    //             duration: 5
-    //         })
-    //     }
-    //     setIsDeleteUser(false);
-    // };
+    const handleDeleteBook = async (_id: string) => {
+        setIsDeleteBook(true);
+        const res = await deleteBookAPI(_id);
+        if (res.data) {
+            message.success("Xóa Book thành công!");
+            refreshTable();
+        } else {
+            notification.error({
+                message: "Xóa Book thất bại",
+                description: res.message,
+                duration: 5
+            })
+        }
+        setIsDeleteBook(false);
+    };
 
     const columns: ProColumns<IBookTable>[] = [
         {
@@ -127,7 +123,6 @@ const TableBook = () => {
             title: 'Created At',
             dataIndex: 'createdAt',
             valueType: 'date',
-            sorter: true,
             hideInSearch: true
         },
         {
@@ -140,7 +135,6 @@ const TableBook = () => {
             title: 'Updated At',
             dataIndex: 'updatedAt',
             valueType: 'date',
-            sorter: true,
             hideInSearch: true
         },
         {
@@ -164,13 +158,13 @@ const TableBook = () => {
                             }}
                         />
                         <Popconfirm
-                            title="Xác nhận xóa user"
-                            description="Bạn có chắc chắn muốn xóa user này?"
-                            //onConfirm={() => handleDeleteUser(entity._id)}
+                            title="Xác nhận xóa book"
+                            description="Bạn có chắc chắn muốn xóa book này?"
+                            onConfirm={() => handleDeleteBook(entity._id)}
                             okText="Yes"
                             cancelText="No"
                             okButtonProps={{
-                                //loading: isDeleteUser,
+                                loading: isDeleteBook,
                             }}
                         >
                             <DeleteTwoTone
@@ -198,7 +192,7 @@ const TableBook = () => {
                     console.log(params, sort, filter);
                     let query = "";
                     if (params) {
-                        query += `current=${params.current}&pageSize=${params.pageSize}`
+                        query += `current=${params.current}&pageSize=${params.pageSize}`;
                         if (params.mainText) {
                             query += `&mainText=/${params.mainText}/i`
                         }
@@ -214,7 +208,7 @@ const TableBook = () => {
                         }
                         const updateDateRange = dateRangeValidate(params.updatedAtRange);
                         if (updateDateRange) {
-                            query += `&createdAt>=${updateDateRange[0]}&createdAt<=${updateDateRange[1]}`
+                            query += `&updatedAt>=${updateDateRange[0]}&updatedAt<=${updateDateRange[1]}`
                         }
                     }
 
@@ -233,14 +227,18 @@ const TableBook = () => {
                     if (sort && sort.price) {
                         query += `&sort=${sort.price === 'ascend' ? 'price' : '-price'}`;
                     }
-                    if (sort && sort.createdAt) {
-                        query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`;
-                    } else {
-                        query += `&sort=-createdAt`;
-                    }
-                    if (sort && sort.updatedAt) {
-                        query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
-                    }
+
+                    // Backend not support sort createdAt and updatedAt
+                    // if (sort && sort.createdAt) {
+                    //     query += `&sort=${sort.createdAt === 'ascend' ? 'createdAt' : '-createdAt'}`
+                    // } else {
+                    //     query += `&sort=-createdAt`
+                    // }
+                    // if (sort && sort.updatedAt) {
+                    //     query += `&sort=${sort.updatedAt === 'ascend' ? 'updatedAt' : '-updatedAt'}`
+                    // } else {
+                    //     query += `&sort=-updatedAt`
+                    // }
 
                     const res = await getBooksAPI(query);
                     if (res.data) {
@@ -273,28 +271,18 @@ const TableBook = () => {
                 dateFormatter="string"
                 headerTitle="Table Book"
                 toolBarRender={() => [
-                    <Button
-                        key="button"
-                        icon={<ExportOutlined />}
-                        type="primary"
+                    <CSVLink
+                        data={currentDataTable}
+                        filename={"book-data-export.csv"}
                     >
-                        <CSVLink
-                            data={currentDataTable}
-                            filename={"user-data-export.csv"}
+                        <Button
+                            key="button"
+                            icon={<ExportOutlined />}
+                            type="primary"
                         >
                             Export
-                        </CSVLink>
-                    </Button>,
-                    <Button
-                        key="button"
-                        icon={<CloudUploadOutlined />}
-                        onClick={() => {
-                            //setOpenModalImport(true);
-                        }}
-                        type="primary"
-                    >
-                        Import
-                    </Button>,
+                        </Button>
+                    </CSVLink>,
                     <Button
                         key="button"
                         icon={<PlusOutlined />}
