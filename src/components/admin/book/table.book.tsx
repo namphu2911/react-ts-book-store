@@ -34,7 +34,7 @@ const TableBook = () => {
 
     const [meta, setMeta] = useState({
         current: 1,
-        pageSize: 5,
+        pageSize: 7,
         pages: 0,
         total: 0
     });
@@ -123,7 +123,8 @@ const TableBook = () => {
             title: 'Created At',
             dataIndex: 'createdAt',
             valueType: 'date',
-            hideInSearch: true
+            hideInSearch: true,
+            sorter: true,
         },
         {
             title: 'Created At',
@@ -135,7 +136,8 @@ const TableBook = () => {
             title: 'Updated At',
             dataIndex: 'updatedAt',
             valueType: 'date',
-            hideInSearch: true
+            hideInSearch: true,
+            sorter: true,
         },
         {
             title: 'Updated At',
@@ -262,7 +264,7 @@ const TableBook = () => {
                     current: meta.current,
                     pageSize: meta.pageSize,
                     showSizeChanger: true,
-                    pageSizeOptions: ['5', '10', '15', '20', '25', '30'],
+                    pageSizeOptions: ['7', '10', '15', '20', '25', '30'],
                     total: meta.total,
                     showTotal: (total, range) => {
                         return (<div> {range[0]}-{range[1]} of {total} rows</div>)
