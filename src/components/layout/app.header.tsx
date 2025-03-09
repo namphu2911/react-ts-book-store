@@ -10,7 +10,7 @@ import 'styles/app.header.scss'
 import { logoutAPI } from "services/api";
 
 const AppHeader = () => {
-    const { user, setUser, isAuthenticated, setIsAuthenticated } = useCurrentApp();
+    const { user, setUser, isAuthenticated, setIsAuthenticated, carts } = useCurrentApp();
     const [openDrawer, setOpenDrawer] = useState(false)
     const navigate = useNavigate();
 
@@ -113,8 +113,7 @@ const AppHeader = () => {
                                     content={contentPopover}
                                     arrow={true}>
                                     <Badge
-                                        // count={carts?.length ?? 0}
-                                        count={10}
+                                        count={carts?.length ?? 0}
                                         size={"small"}
                                         showZero
                                     >

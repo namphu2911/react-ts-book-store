@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import ReactImageGallery from "react-image-gallery";
 import ModalGallery from "components/client/book/modal.gallery";
-import { Col, Divider, Rate, Row } from "antd";
+import { App, Col, Divider, Rate, Row } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { BsCartPlus } from "react-icons/bs";
 import 'styles/book.scss';
+import { useCurrentApp } from "components/context/app.context";
 
 interface IProps {
     currentBook: IBookTable | null;
 }
+
+type UserAction = 'MINUS' | 'PLUS';
 
 const SeeBookDetail = (props: IProps) => {
     const { currentBook } = props;
@@ -21,6 +24,9 @@ const SeeBookDetail = (props: IProps) => {
     const [isOpenModalGallery, setIsOpenModalGallery] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const refGallery = useRef<ReactImageGallery>(null);
+    const [currentQuantity, setCurrentQuantity] = useState<number>(1);
+    const { setCarts } = useCurrentApp();
+    const { message } = App.useApp();
 
     useEffect(() => {
         if (currentBook) {
@@ -57,6 +63,64 @@ const SeeBookDetail = (props: IProps) => {
         //get current index onClick
         setIsOpenModalGallery(true);
         setCurrentIndex(refGallery?.current?.getCurrentIndex() ?? 0)
+    }
+
+    const handleChangeButton = (type: UserAction) => {
+        if (type === 'MINUS') {
+            if (+currentQuantity - 1 > 0) {
+                setCurrentQuantity(+currentQuantity - 1);
+            } else return;
+        }
+        if (type === 'PLUS' && currentBook) {
+            if (+currentQuantity !== +currentBook.quantity) {
+                setCurrentQuantity(+currentQuantity + 1);
+            } else return;
+        }
+    }
+
+    const handleChangeInput = (value: string) => {
+        if (value === "") {
+            setCurrentQuantity(NaN); // Cho phép xóa tạm thời
+        } else if (!isNaN(+value) && +value > 0 && currentBook && +value < +currentBook.quantity) {
+            setCurrentQuantity(+value);
+        }
+    }
+
+    const handleBlur = () => {
+        if (isNaN(currentQuantity) || currentQuantity < 1) {
+            setCurrentQuantity(1);
+        }
+    }
+
+    const handleAddToCart = () => {
+        //update localStorage
+        const cartStorage = localStorage.getItem("carts");
+        if (cartStorage && currentBook) {
+            //update
+            const carts = JSON.parse(cartStorage) as ICart[];
+            //check exits
+            const isExistIndex = carts.findIndex(item => item._id === currentBook?._id);
+            if (isExistIndex > -1) {
+                carts[isExistIndex].quantity = carts[isExistIndex].quantity + currentQuantity;
+            } else {
+                carts.push({
+                    _id: currentBook._id,
+                    quantity: currentQuantity,
+                    detail: currentBook
+                })
+            }
+            localStorage.setItem("carts", JSON.stringify(carts));
+            setCarts(carts);
+        } else {
+            const data = [{
+                _id: currentBook?._id as string,
+                quantity: currentQuantity,
+                detail: currentBook!
+            }];
+            localStorage.setItem("carts", JSON.stringify(data));
+            setCarts(data);
+        }
+        message.success("Thêm sản phầm vào giỏ hàng thành công.");
     }
 
     return (
@@ -111,13 +175,21 @@ const SeeBookDetail = (props: IProps) => {
                                 <div className='quantity'>
                                     <span className='left'>Số lượng</span>
                                     <span className='right'>
-                                        <button ><MinusOutlined /></button>
-                                        <input defaultValue={1} />
-                                        <button><PlusOutlined /></button>
+                                        <button onClick={() => handleChangeButton('MINUS')}>
+                                            <MinusOutlined />
+                                        </button>
+                                        <input
+                                            onChange={(event) => handleChangeInput(event.target.value)}
+                                            onBlur={handleBlur}
+                                            value={isNaN(currentQuantity) ? '' : currentQuantity}
+                                        />
+                                        <button onClick={() => handleChangeButton('PLUS')}>
+                                            <PlusOutlined />
+                                        </button>
                                     </span>
                                 </div>
                                 <div className='buy'>
-                                    <button className='cart'>
+                                    <button className='cart' onClick={() => handleAddToCart()}>
                                         <BsCartPlus className='icon-cart' />
                                         <span>Thêm vào giỏ hàng</span>
                                     </button>
