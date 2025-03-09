@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Avatar, Badge, Divider, Drawer, Dropdown, Popover, Space } from "antd";
+import { Avatar, Badge, Divider, Drawer, Dropdown, Empty, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import 'styles/app.header.scss'
 import { logoutAPI } from "services/api";
@@ -55,7 +55,7 @@ const AppHeader = () => {
     const contentPopover = () => {
         return (
             <div className='pop-cart-body'>
-                {/* <div className='pop-cart-content'>
+                <div className='pop-cart-content'>
                     {carts?.map((book, index) => {
                         return (
                             <div className='book' key={`book-${index}`}>
@@ -76,7 +76,7 @@ const AppHeader = () => {
                     <Empty
                         description="Không có sản phẩm trong giỏ hàng"
                     />
-                } */}
+                }
             </div>
         )
     }
@@ -104,12 +104,12 @@ const AppHeader = () => {
                     </div>
                     <nav className="page-header__bottom">
                         <ul id="navigation" className="navigation">
-                            <li className="navigation__item">
+                            <li className="navigation__item" onClick={() => navigate('/order')}>
                                 <Popover
                                     className="popover-carts"
                                     placement="topRight"
                                     rootClassName="popover-carts"
-                                    title={"Sản phẩm mới thêm"}
+                                    title={carts.length > 0 ? "Sản phẩm mới thêm" : ""}
                                     content={contentPopover}
                                     arrow={true}>
                                     <Badge
