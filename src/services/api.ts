@@ -120,8 +120,19 @@ const deleteBookAPI = (_id: string) => {
     return axios.delete<IBackendRes<IBookTable>>(urlBackend)
 }
 
+const getBookByIdAPI = (id: string) => {
+    const urlBackend = `/api/v1/book/${id}`;
+    return axios.get<IBackendRes<IBookTable>>(urlBackend,
+        {
+            headers: {
+                delay: 3000
+            }
+        }
+    )
+}
+
 export {
     loginAPI, registerAPI, logoutAPI, fetchAccountAPI,
     getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI,
-    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI, deleteBookAPI
+    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI, deleteBookAPI, getBookByIdAPI
 }

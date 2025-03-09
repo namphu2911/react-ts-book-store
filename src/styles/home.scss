@@ -55,7 +55,7 @@
         @media screen and (max-width: 600px) {
             .column {
                 flex: unset;
-                width: calc(25% - 8px);
+                width: calc(50% - 8px);
                 flex-wrap: wrap;
             }
         }

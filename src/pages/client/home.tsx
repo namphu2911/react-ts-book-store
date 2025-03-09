@@ -7,6 +7,7 @@ import { FilterTwoTone, ReloadOutlined } from "@ant-design/icons";
 import 'styles/home.scss'
 import { useEffect, useState } from "react";
 import { getBooksAPI, getCategoryAPI } from "services/api.ts";
+import { useNavigate } from "react-router-dom";
 
 interface FieldType {
     fullName: string;
@@ -35,6 +36,8 @@ const HomePage = () => {
     const [sortQuery, setSortQuery] = useState<string>('sort=-sold');
 
     const [form] = Form.useForm();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const initCategory = async () => {
@@ -258,7 +261,8 @@ const HomePage = () => {
                                 <Row className="customize-row">
                                     {listBook?.map((item, index) => {
                                         return (
-                                            <div className="column" key={`book-${index}`}>
+                                            <div className="column" key={`book-${index}`}
+                                                onClick={() => navigate(`/book/${item._id}`)}>
                                                 <div className="wrapper">
                                                     <div className="thumbnail">
                                                         <img
