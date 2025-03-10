@@ -131,8 +131,20 @@ const getBookByIdAPI = (id: string) => {
     )
 }
 
+const createOrderAPI = (
+    fullName: string, address: string,
+    phone: number, totalPrice: number,
+    type: string, detail: any
+) => {
+    const name = `${fullName}_${type}`;
+    const data = { name, address, phone, totalPrice, type, detail };
+    const urlBackend = `/api/v1/order`;
+    return axios.post<IBackendRes<IOrder>>(urlBackend, data);
+}
+
 export {
     loginAPI, registerAPI, logoutAPI, fetchAccountAPI,
     getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI,
-    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI, deleteBookAPI, getBookByIdAPI
+    getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI, deleteBookAPI, getBookByIdAPI,
+    createOrderAPI
 }

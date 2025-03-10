@@ -86,4 +86,13 @@ declare global {
         quantity: number;
         detail: IBookTable;
     }
+
+    interface IOrder {
+        name: string;
+        address: string;
+        phone: number;
+        totalPrice: number;
+        type: string;
+        detail: [];
+    }
 }
