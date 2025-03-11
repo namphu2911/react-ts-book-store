@@ -10,8 +10,14 @@ import 'styles/app.header.scss'
 import { logoutAPI } from "services/api";
 import ManageAccount from "components/client/account/manage.account";
 
-const AppHeader = () => {
-    const { user, setUser, isAuthenticated, setIsAuthenticated, carts } = useCurrentApp();
+interface IProps {
+    searchTerm: string;
+    setSearchTerm: (value: string) => void;
+}
+
+const AppHeader = (props: IProps) => {
+    const { searchTerm, setSearchTerm } = props;
+    const { user, setUser, isAuthenticated, setIsAuthenticated, carts, setCarts } = useCurrentApp();
     const [openDrawer, setOpenDrawer] = useState(false);
     const [openManageAccount, setOpenManageAccount] = useState(false);
     const navigate = useNavigate();
@@ -20,8 +26,10 @@ const AppHeader = () => {
         const res = await logoutAPI();
         if (res.data) {
             setUser(null);
+            setCarts([]);
             setIsAuthenticated(false);
             localStorage.removeItem('access_token');
+            localStorage.removeItem('carts');
         }
     }
 
@@ -99,8 +107,8 @@ const AppHeader = () => {
                             <input
                                 className="input-search" type={'text'}
                                 placeholder="Bạn tìm gì hôm nay"
-                            // value={props.searchTerm}
-                            // onChange={(e) => props.setSearchTerm(e.target.value)}
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
                     </div>

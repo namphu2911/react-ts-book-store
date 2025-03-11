@@ -7,7 +7,7 @@ import { FilterTwoTone, ReloadOutlined } from "@ant-design/icons";
 import 'styles/home.scss'
 import { useEffect, useState } from "react";
 import { getBooksAPI, getCategoryAPI } from "services/api.ts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import MobileFilter from "components/client/book/mobile.filter";
 
 interface FieldType {
@@ -23,6 +23,7 @@ interface FieldType {
 }
 
 const HomePage = () => {
+    const [searchTerm] = useOutletContext() as any;
     const [listCategory, setListCategory] = useState<{
         label: string;
         value: string;
@@ -59,13 +60,16 @@ const HomePage = () => {
 
     useEffect(() => {
         fetchBook();
-    }, [current, pageSize, filter, sortQuery]);
+    }, [current, pageSize, filter, sortQuery, searchTerm]);
 
     const fetchBook = async () => {
         setIsLoading(true);
         let query = `current=${current}&pageSize=${pageSize}`;
         if (filter) {
             query += `&${filter}`;
+        }
+        if (searchTerm) {
+            query += `&mainText=/${searchTerm}/i`;
         }
         if (sortQuery) {
             query += `&${sortQuery}`;
