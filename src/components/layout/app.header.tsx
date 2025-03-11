@@ -8,10 +8,12 @@ import { Avatar, Badge, Divider, Drawer, Dropdown, Empty, Popover, Space } from 
 import { FiShoppingCart } from "react-icons/fi";
 import 'styles/app.header.scss'
 import { logoutAPI } from "services/api";
+import ManageAccount from "components/client/account/manage.account";
 
 const AppHeader = () => {
     const { user, setUser, isAuthenticated, setIsAuthenticated, carts } = useCurrentApp();
-    const [openDrawer, setOpenDrawer] = useState(false)
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [openManageAccount, setOpenManageAccount] = useState(false);
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -27,7 +29,7 @@ const AppHeader = () => {
         {
             label: <label
                 style={{ cursor: 'pointer' }}
-                onClick={() => alert("me")}
+                onClick={() => setOpenManageAccount(true)}
             >Quản lý tài khoản</label>,
             key: 'account',
         },
@@ -149,6 +151,11 @@ const AppHeader = () => {
                 <p onClick={() => handleLogout()}>Đăng xuất</p>
                 <Divider />
             </Drawer>
+
+            <ManageAccount
+                openManageAccount={openManageAccount}
+                setOpenManageAccount={setOpenManageAccount}
+            />
         </>
     )
 }

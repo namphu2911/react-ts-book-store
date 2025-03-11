@@ -13,6 +13,7 @@ import {
     UserOutlined
 } from "@ant-design/icons";
 import { logoutAPI } from "services/api";
+import ManageAccount from "components/client/account/manage.account";
 
 type MenuItem = Required<MenuProps>['items'][number];
 const { Content, Footer, Sider } = Layout;
@@ -21,6 +22,8 @@ const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeMenu, setActiveMenu] = useState('dashboard');
     const { user, setUser, isAuthenticated, setIsAuthenticated } = useCurrentApp();
+
+    const [openManageAccount, setOpenManageAccount] = useState(false);
 
     const handleLogout = async () => {
         const res = await logoutAPI();
@@ -64,7 +67,7 @@ const LayoutAdmin = () => {
         {
             label: <label
                 style={{ cursor: 'pointer' }}
-                onClick={() => alert("me")}
+                onClick={() => setOpenManageAccount(true)}
             >Quản lý tài khoản</label>,
             key: 'account',
         },
@@ -150,6 +153,11 @@ const LayoutAdmin = () => {
                     </Footer>
                 </Layout>
             </Layout>
+
+            <ManageAccount
+                openManageAccount={openManageAccount}
+                setOpenManageAccount={setOpenManageAccount}
+            />
         </>
     );
 };

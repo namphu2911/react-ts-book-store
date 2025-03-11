@@ -147,9 +147,27 @@ const getHistoryAPI = () => {
     return axios.get<IBackendRes<IHistory[]>>(urlBackend);
 }
 
+const updateUserInfoAPI = (
+    _id: string, fullName: string,
+    phone: string, avatar: string,
+) => {
+    const data = { _id, fullName, phone, avatar }
+    const urlBackend = "/api/v1/user";
+    return axios.put<IBackendRes<IRegister>>(urlBackend, data);
+}
+
+const updateUserPasswordAPI = (
+    email: string, oldpass: string, newpass: string
+) => {
+    const data = { email, oldpass, newpass };
+    const urlBackend = "/api/v1/user/change-password";
+    return axios.post<IBackendRes<IRegister>>(urlBackend, data);
+}
+
 export {
     loginAPI, registerAPI, logoutAPI, fetchAccountAPI,
     getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI,
     getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI, deleteBookAPI, getBookByIdAPI,
-    createOrderAPI, getHistoryAPI
+    createOrderAPI, getHistoryAPI,
+    updateUserInfoAPI, updateUserPasswordAPI
 }
