@@ -100,7 +100,6 @@ const createBookAPI = (
     category: string, thumbnail: string, slider: string[]
 ) => {
     const data = { mainText, author, price, quantity, category, thumbnail, slider, sold: 22 }
-    console.log(data);
     const urlBackend = "/api/v1/book";
     return axios.post<IBackendRes<IBookTable>>(urlBackend, data);
 }
@@ -164,10 +163,25 @@ const updateUserPasswordAPI = (
     return axios.post<IBackendRes<IRegister>>(urlBackend, data);
 }
 
+const getOrdersAPI = (query: string) => {
+    const urlBackend = `/api/v1/order?${query}`;
+    return axios.get<IBackendRes<IModelPaginate<IOrderTable>>>(urlBackend)
+}
+
+const getDashboardAPI = () => {
+    const urlBackend = `/api/v1/database/dashboard`;
+    return axios.get<IBackendRes<{
+        countOrder: number;
+        countUser: number;
+        countBook: number;
+    }>>(urlBackend)
+}
+
 export {
     loginAPI, registerAPI, logoutAPI, fetchAccountAPI,
     getUsersAPI, createUserAPI, bulkCreateUserAPI, updateUserAPI, deleteUserAPI,
     getBooksAPI, getCategoryAPI, uploadFileAPI, createBookAPI, updateBookAPI, deleteBookAPI, getBookByIdAPI,
     createOrderAPI, getHistoryAPI,
-    updateUserInfoAPI, updateUserPasswordAPI
+    updateUserInfoAPI, updateUserPasswordAPI,
+    getOrdersAPI, getDashboardAPI
 }

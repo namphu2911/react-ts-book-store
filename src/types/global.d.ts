@@ -102,11 +102,27 @@ declare global {
         type: string;
         email: string;
         phone: number;
-        userID: string;
+        userId: string;
         detail: {
-            bookName: string;
-            quantity: number;
             _id: string;
+            quantity: number;
+            bookName: string;
+        }[];
+        totalPrice: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }
+
+    interface IOrderTable {
+        _id: string;
+        name: string;
+        address: string;
+        phone: number;
+        type: string;
+        detail: {
+            _id: string;
+            quantity: number;
+            bookName: string;
         }[];
         totalPrice: number;
         createdAt: Date;
