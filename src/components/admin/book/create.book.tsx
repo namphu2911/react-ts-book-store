@@ -74,8 +74,6 @@ const CreateBook = (props: IProps) => {
         const thumbnail = fileListThumbnail?.[0].name ?? "";
         const slider = fileListSlider?.map(item => item.name) ?? [];
         const res = await createBookAPI(mainText, author, price, quantity, category, thumbnail, slider);
-        console.log(mainText, author, price, quantity, category, thumbnail, slider);
-        console.log(res);
         if (res && res.data) {
             message.success("Thêm mới book thành công");
             form.resetFields();
