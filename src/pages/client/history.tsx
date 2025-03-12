@@ -3,6 +3,7 @@ import { FORMATE_DATE_VN } from "services/helper";
 import { App, Divider, Drawer, Table, TableProps, Tag } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 
 const HistoryPage = () => {
     const columns: TableProps<IHistory>['columns'] = [
@@ -75,7 +76,7 @@ const HistoryPage = () => {
 
 
     return (
-        <div style={{ margin: 50 }}>
+        <div style={{ margin: isMobile ? 10 : 50 }}>
             <h3>Lịch sử mua hàng</h3>
             <Divider />
             <Table
@@ -84,6 +85,7 @@ const HistoryPage = () => {
                 dataSource={dataHistory}
                 rowKey={"_id"}
                 loading={loading}
+                scroll={{ x: 'max-content' }}
             />
             <Drawer
                 title="Chi tiết đơn hàng"
@@ -92,7 +94,7 @@ const HistoryPage = () => {
                     setDataDetail(null);
                 }}
                 open={openDetail}
-                width="25%"
+                width={isMobile ? "100vw" : "50vw"}
             >
                 {dataDetail?.detail?.map((item, index) => {
                     return (

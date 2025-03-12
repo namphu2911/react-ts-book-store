@@ -138,6 +138,7 @@ const SeeBookDetail = (props: IProps) => {
         <div style={{ background: '#efefef', padding: "20px 0" }}>
             <div className='view-detail-book' style={{ maxWidth: 1440, margin: '0 auto', minHeight: "calc(100vh - 150px)" }}>
                 <Breadcrumb
+                    style={{ marginLeft: 20 }}
                     separator=">"
                     items={[{
                         title: <Link to={"/"}>Trang Chủ</Link>,

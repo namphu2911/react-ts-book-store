@@ -95,7 +95,7 @@ const UserInfo = () => {
                     <Row gutter={[30, 30]}>
                         <Col sm={24} md={12}>
                             <Avatar
-                                size={{ xs: 32, sm: 64, md: 80, lg: 128, xl: 160, xxl: 200 }}
+                                size={{ xs: 80, sm: 80, md: 80, lg: 128, xl: 160, xxl: 200 }}
                                 icon={<AntDesignOutlined />}
                                 src={urlAvatar}
                                 shape="circle"

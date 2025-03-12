@@ -1,4 +1,5 @@
 import Payment from '@/components/client/order/payment';
+import { useCurrentApp } from 'components/context/app.context';
 import { Breadcrumb, Button, Result, Steps } from 'antd';
 import SeeOrderDetail from 'components/client/order';
 import { useState } from 'react';
@@ -7,11 +8,13 @@ import 'styles/order.scss';
 
 const OrderPage = () => {
     const [currentStep, setCurrentStep] = useState<number>(0);
+    const { carts } = useCurrentApp();
 
     return (
         <div style={{ background: '#efefef', padding: '20px 0' }}>
             <div className="order-container" style={{ maxWidth: 1440, margin: '0 auto' }}>
                 <Breadcrumb
+                    style={{ marginLeft: 20 }}
                     separator=">"
                     items={[
                         {
@@ -23,7 +26,7 @@ const OrderPage = () => {
                         },
                     ]}
                 />
-                <div className="order-steps" style={{ marginTop: 10 }}>
+                {carts.length > 0 && <div className="order-steps" style={{ marginTop: 10 }}>
                     <Steps
                         size="small"
                         current={currentStep}
@@ -39,7 +42,7 @@ const OrderPage = () => {
                             },
                         ]}
                     />
-                </div>
+                </div>}
                 {currentStep === 0 && <SeeOrderDetail setCurrentStep={setCurrentStep} />}
                 {currentStep === 1 && <Payment setCurrentStep={setCurrentStep} />}
                 {currentStep === 2 &&

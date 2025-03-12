@@ -5,6 +5,7 @@ import { Buffer } from "buffer";
 import { useState } from "react";
 import { bulkCreateUserAPI } from "services/api";
 import templateFile from "assets/template/templateUser.xlsx?url";
+import { isMobile } from 'react-device-detect'
 
 interface IProps {
     openModalImport: boolean;
@@ -130,7 +131,7 @@ const ImportUser = (props: IProps) => {
             }}
             okText={"Import"}
             onCancel={onClose}
-            width={"50vw"}
+            width={isMobile ? "100vw" : "50vw"}
             destroyOnClose={true}
         >
             <Dragger {...propsUpload}>

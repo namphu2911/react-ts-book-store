@@ -8,6 +8,7 @@ import { CSVLink } from "react-csv";
 import CreateBook from "components/admin/book/create.book";
 import BookDetail from "components/admin/book/detail.book";
 import UpdateBook from "components/admin/book/update.book";
+import { isMobile } from "react-device-detect";
 
 interface ISearch {
     mainText: string;
@@ -190,6 +191,7 @@ const TableBook = () => {
                 columns={columns}
                 actionRef={actionRef}
                 cardBordered
+                scroll={{ x: 1300, y: 400 }}
                 request={async (params, sort, filter) => {
                     console.log(params, sort, filter);
                     let query = "";
@@ -282,7 +284,7 @@ const TableBook = () => {
                             icon={<ExportOutlined />}
                             type="primary"
                         >
-                            Export
+                            {isMobile ? "" : "Export"}
                         </Button>
                     </CSVLink>,
                     <Button
@@ -293,7 +295,7 @@ const TableBook = () => {
                         }}
                         type="primary"
                     >
-                        Add new
+                        {isMobile ? "" : "Add new"}
                     </Button>
                 ]}
                 search={{

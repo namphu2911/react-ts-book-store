@@ -91,6 +91,7 @@ const TableOrder = () => {
                 columns={columns}
                 actionRef={actionRef}
                 cardBordered
+                scroll={{ x: 1300, y: 400 }}
                 request={async (params, sort, filter) => {
                     console.log(params, sort, filter);
                     let query = "";

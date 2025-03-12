@@ -9,6 +9,7 @@ import CreateUser from "components/admin/user/create.user";
 import ImportUser from "components/admin/user/data/import.user";
 import { CSVLink } from "react-csv";
 import UpdateUser from "components/admin/user/update.user";
+import { isMobile } from "react-device-detect";
 
 interface ISearch {
     fullName: string;
@@ -174,6 +175,7 @@ const TableUser = () => {
                 columns={columns}
                 actionRef={actionRef}
                 cardBordered
+                scroll={{ x: 1300, y: 400 }}
                 request={async (params, sort, filter) => {
                     console.log(params, sort, filter);
                     let query = "";
@@ -246,7 +248,7 @@ const TableUser = () => {
                             icon={<ExportOutlined />}
                             type="primary"
                         >
-                            Export
+                            {isMobile ? "" : "Export"}
                         </Button>
                     </CSVLink>,
                     <Button
@@ -257,7 +259,7 @@ const TableUser = () => {
                         }}
                         type="primary"
                     >
-                        Import
+                        {isMobile ? "" : "Import"}
                     </Button>,
                     <Button
                         key="button"
@@ -267,7 +269,7 @@ const TableUser = () => {
                         }}
                         type="primary"
                     >
-                        Add new
+                        {isMobile ? "" : "Add new"}
                     </Button>
                 ]}
                 search={{

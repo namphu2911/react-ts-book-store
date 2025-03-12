@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCurrentApp } from "components/context/app.context";
-import { Avatar, Dropdown, Layout, Menu, MenuProps, Space } from 'antd';
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Avatar, Divider, Dropdown, Layout, Menu, MenuProps, Space } from 'antd';
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
     AppstoreOutlined,
     DollarCircleOutlined,
@@ -13,6 +13,8 @@ import {
 } from "@ant-design/icons";
 import { logoutAPI } from "services/api";
 import ManageAccount from "components/client/account/manage.account";
+import { isMobile } from 'react-device-detect'
+import { FaReact } from "react-icons/fa";
 
 type MenuItem = Required<MenuProps>['items'][number];
 const { Content, Footer, Sider } = Layout;
@@ -24,6 +26,7 @@ const LayoutAdmin = () => {
 
     const [openManageAccount, setOpenManageAccount] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         const res = await logoutAPI();
@@ -110,12 +113,19 @@ const LayoutAdmin = () => {
                 className="layout-admin"
             >
                 <Sider
+                    trigger={null}
                     theme='light'
-                    collapsible
-                    collapsed={collapsed}
+                    collapsible={!isMobile}
+                    collapsed={isMobile ? true : collapsed}
                     onCollapse={(value) => setCollapsed(value)}>
-                    <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
-                        Admin
+                    <div onClick={() => navigate('/')}>
+                        <FaReact style={{
+                            height: "2em",
+                            width: "2em",
+                            display: "block",
+                            margin: "26px auto"
+                        }} />
+                        <Divider />
                     </div>
                     <Menu
                         selectedKeys={[activeMenu]}
@@ -133,12 +143,12 @@ const LayoutAdmin = () => {
                         justifyContent: "space-between",
                         padding: "0 15px",
                     }}>
-                        <span>
+                        {!isMobile && <span>
                             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                                 className: 'trigger',
                                 onClick: () => setCollapsed(!collapsed),
                             })}
-                        </span>
+                        </span>}
                         <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                             <Space style={{ cursor: "pointer" }}>
                                 <Avatar src={urlAvatar} />

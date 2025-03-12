@@ -31,7 +31,7 @@ const ManageAccount = (props: IProps) => {
             footer={null}
             onCancel={() => setOpenManageAccount(false)}
             maskClosable={false}
-            width={isMobile ? '90vw' : '60vw'}
+            width={isMobile ? '100vw' : '60vw'}
         >
             <Tabs defaultActiveKey="info" items={items} />
         </Modal>

@@ -46,11 +46,8 @@ const AdminDashboard = () => {
 
     return (
         <Row gutter={[40, 40]}>
-            <Col span={8}>
-                <Card
-                    title=""
-                    bordered={false}
-                >
+            <Col xs={24} md={8}>
+                <Card title="" bordered={false} style={{ width: '100%' }}>
                     <Statistic
                         title="Tổng Users"
                         value={dataDashboard.countUser}
@@ -58,11 +55,8 @@ const AdminDashboard = () => {
                     />
                 </Card>
             </Col>
-            <Col span={8}>
-                <Card
-                    title=""
-                    bordered={false}
-                >
+            <Col xs={24} md={8}>
+                <Card title="" bordered={false} style={{ width: '100%' }}>
                     <Statistic
                         title="Tổng Orders"
                         value={dataDashboard.countOrder}
@@ -71,11 +65,8 @@ const AdminDashboard = () => {
                     />
                 </Card>
             </Col>
-            <Col span={8}>
-                <Card
-                    title=""
-                    bordered={false}
-                >
+            <Col xs={24} md={8}>
+                <Card title="" bordered={false} style={{ width: '100%' }}>
                     <Statistic
                         title="Tổng Books"
                         value={dataDashboard.countBook}
@@ -85,6 +76,6 @@ const AdminDashboard = () => {
                 </Card>
             </Col>
         </Row>
-    )
+    );
 }
 export default AdminDashboard;
