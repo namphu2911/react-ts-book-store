@@ -97,6 +97,7 @@ const SeeBookDetail = (props: IProps) => {
     const handleAddToCart = (isBuyNow = false) => {
         if (!user) {
             message.error("Bạn cần đăng nhập để sử dụng tính năng này!");
+            navigate("/login");
             return;
         }
         //update localStorage

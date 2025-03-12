@@ -141,7 +141,7 @@ const HomePage = () => {
     return (
         <>
             <div style={{ background: "#efefef", padding: "20px 0" }}>
-                <div className="homepage" style={{ maxWidth: 1440, margin: "0px auto" }}>
+                <div className="homepage" style={{ maxWidth: 1440, margin: "0px auto", overflow: 'hidden' }}>
                     <Row gutter={[20, 20]}>
                         <Col md={4} sm={0} xs={0}>
                             <div style={{ padding: "20px", background: "#fff", borderRadius: 5 }}>

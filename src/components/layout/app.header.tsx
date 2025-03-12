@@ -156,7 +156,12 @@ const AppHeader = (props: IProps) => {
             >
                 <p>Quản lý tài khoản</p>
                 <Divider />
-                <p onClick={() => handleLogout()}>Đăng xuất</p>
+                <p onClick={() => {
+                    handleLogout()
+                    setOpenDrawer(false)
+                }}>
+                    Đăng xuất
+                </p>
                 <Divider />
             </Drawer>
 
