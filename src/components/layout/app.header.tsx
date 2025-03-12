@@ -9,6 +9,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import 'styles/app.header.scss'
 import { logoutAPI } from "services/api";
 import ManageAccount from "components/client/account/manage.account";
+import { isMobile } from 'react-device-detect';
 
 interface IProps {
     searchTerm: string;
@@ -115,21 +116,32 @@ const AppHeader = (props: IProps) => {
                     <nav className="page-header__bottom">
                         <ul id="navigation" className="navigation">
                             <li className="navigation__item" onClick={() => navigate('/order')}>
-                                <Popover
-                                    className="popover-carts"
-                                    placement="topRight"
-                                    rootClassName="popover-carts"
-                                    title={carts.length > 0 ? "Sản phẩm mới thêm" : ""}
-                                    content={contentPopover}
-                                    arrow={true}>
+                                {!isMobile ?
+                                    <Popover
+                                        className="popover-carts"
+                                        placement="topRight"
+                                        rootClassName="popover-carts"
+                                        title={"Sản phẩm mới thêm"}
+                                        content={contentPopover}
+                                        arrow={true}>
+                                        <Badge
+                                            count={carts?.length ?? 0}
+                                            size={"small"}
+                                            showZero
+                                        >
+                                            <FiShoppingCart className='icon-cart' />
+                                        </Badge>
+                                    </Popover>
+                                    :
                                     <Badge
                                         count={carts?.length ?? 0}
                                         size={"small"}
                                         showZero
+                                        onClick={() => navigate("/order")}
                                     >
                                         <FiShoppingCart className='icon-cart' />
                                     </Badge>
-                                </Popover>
+                                }
                             </li>
                             <li className="navigation__item mobile"><Divider type='vertical' /></li>
                             <li className="navigation__item mobile">
