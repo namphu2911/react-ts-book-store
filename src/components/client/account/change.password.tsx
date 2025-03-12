@@ -42,8 +42,8 @@ const ChangePassword = () => {
     return (
         <div style={{ minHeight: 400 }}>
             <Row>
-                <Col span={1}></Col>
-                <Col span={12}>
+                <Col sm={24} md={12}></Col>
+                <Col sm={24} md={12}>
                     <Form
                         onFinish={onFinish}
                         form={form}

@@ -93,7 +93,7 @@ const UserInfo = () => {
             <Row>
                 <Col sm={24} md={12}>
                     <Row gutter={[30, 30]}>
-                        <Col span={24}>
+                        <Col sm={24} md={12}>
                             <Avatar
                                 size={{ xs: 32, sm: 64, md: 80, lg: 128, xl: 160, xxl: 200 }}
                                 icon={<AntDesignOutlined />}

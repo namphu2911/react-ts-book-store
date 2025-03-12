@@ -89,6 +89,11 @@ const LoginPage = () => {
                                     <Link to='/register'> Đăng Ký </Link>
                                 </span>
                             </p>
+                            <p className="text text-normal" style={{ textAlign: "center" }}>
+                                <span>
+                                    <Link to='/'> Trang chủ </Link>
+                                </span>
+                            </p>
                         </Form>
                     </section>
                 </div>

@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Avatar, Badge, Divider, Drawer, Dropdown, Empty, Popover, Space } from "antd";
+import { Avatar, Badge, Divider, Dropdown, Empty, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import 'styles/app.header.scss'
 import { logoutAPI } from "services/api";
 import ManageAccount from "components/client/account/manage.account";
 import { isMobile } from 'react-device-detect';
+import { UserOutlined } from "@ant-design/icons";
 
 interface IProps {
     searchTerm: string;
@@ -19,7 +20,6 @@ interface IProps {
 const AppHeader = (props: IProps) => {
     const { searchTerm, setSearchTerm } = props;
     const { user, setUser, isAuthenticated, setIsAuthenticated, carts, setCarts } = useCurrentApp();
-    const [openDrawer, setOpenDrawer] = useState(false);
     const [openManageAccount, setOpenManageAccount] = useState(false);
     const navigate = useNavigate();
 
@@ -97,9 +97,9 @@ const AppHeader = (props: IProps) => {
             <div className='header-container'>
                 <header className="page-header">
                     <div className="page-header__top">
-                        <div className="page-header__toggle" onClick={() => {
-                            setOpenDrawer(true)
-                        }}>☰</div>
+                        <div className="page-header__toggle" onClick={() => navigate('/')}>
+                            <FaReact className='rotate icon-react' />
+                        </div>
                         <div className='page-header__logo'>
                             <span className='logo'>
                                 <span onClick={() => navigate('/')}> <FaReact className='rotate icon-react' />Book Store</span>
@@ -143,15 +143,21 @@ const AppHeader = (props: IProps) => {
                                     </Badge>
                                 }
                             </li>
-                            <li className="navigation__item mobile"><Divider type='vertical' /></li>
-                            <li className="navigation__item mobile">
+                            <li className="navigation__item" style={{ padding: 0 }}><Divider type='vertical' /></li>
+                            <li className="navigation__item" style={{ padding: 0 }}>
                                 {!isAuthenticated ?
-                                    <span onClick={() => navigate('/login')}> Tài Khoản</span>
+                                    <Badge
+                                        size={"small"}
+                                        showZero
+                                        onClick={() => navigate('/login')}
+                                    >
+                                        <UserOutlined className='icon-user' />
+                                        <span style={{ display: isMobile ? 'none' : 'inline' }}> Tài khoản</span>
+                                    </Badge>
                                     :
-                                    <Dropdown menu={{ items }} trigger={['click']}>
-                                        <Space >
-                                            <Avatar src={urlAvatar} />
-                                            {user?.fullName}
+                                    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" arrow>
+                                        <Space>
+                                            <Avatar src={urlAvatar} style={{ bottom: 5 }} />
                                         </Space>
                                     </Dropdown>
                                 }
@@ -160,22 +166,6 @@ const AppHeader = (props: IProps) => {
                     </nav>
                 </header>
             </div>
-            <Drawer
-                title="Menu chức năng"
-                placement="left"
-                onClose={() => setOpenDrawer(false)}
-                open={openDrawer}
-            >
-                <p>Quản lý tài khoản</p>
-                <Divider />
-                <p onClick={() => {
-                    handleLogout()
-                    setOpenDrawer(false)
-                }}>
-                    Đăng xuất
-                </p>
-                <Divider />
-            </Drawer>
 
             <ManageAccount
                 openManageAccount={openManageAccount}

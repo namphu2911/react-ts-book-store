@@ -3,7 +3,6 @@ import { Breadcrumb, Button, Result, Steps } from 'antd';
 import SeeOrderDetail from 'components/client/order';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { isMobile } from 'react-device-detect';
 import 'styles/order.scss';
 
 const OrderPage = () => {
@@ -24,25 +23,23 @@ const OrderPage = () => {
                         },
                     ]}
                 />
-                {!isMobile &&
-                    <div className="order-steps" style={{ marginTop: 10 }}>
-                        <Steps
-                            size="small"
-                            current={currentStep}
-                            items={[
-                                {
-                                    title: 'Đơn hàng',
-                                },
-                                {
-                                    title: 'Đặt hàng',
-                                },
-                                {
-                                    title: 'Thanh toán',
-                                },
-                            ]}
-                        />
-                    </div>
-                }
+                <div className="order-steps" style={{ marginTop: 10 }}>
+                    <Steps
+                        size="small"
+                        current={currentStep}
+                        items={[
+                            {
+                                title: 'Đơn hàng',
+                            },
+                            {
+                                title: 'Đặt hàng',
+                            },
+                            {
+                                title: 'Thanh toán',
+                            },
+                        ]}
+                    />
+                </div>
                 {currentStep === 0 && <SeeOrderDetail setCurrentStep={setCurrentStep} />}
                 {currentStep === 1 && <Payment setCurrentStep={setCurrentStep} />}
                 {currentStep === 2 &&

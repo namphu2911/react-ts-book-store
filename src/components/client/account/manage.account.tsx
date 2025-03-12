@@ -1,6 +1,7 @@
 import { Modal, Tabs, TabsProps } from "antd";
 import UserInfo from "components/client/account/user.info"
 import ChangePassword from "components/client/account/change.password"
+import { isMobile } from 'react-device-detect'
 
 interface IProps {
     openManageAccount: boolean;
@@ -30,7 +31,7 @@ const ManageAccount = (props: IProps) => {
             footer={null}
             onCancel={() => setOpenManageAccount(false)}
             maskClosable={false}
-            width={"60vw"}
+            width={isMobile ? '90vw' : '60vw'}
         >
             <Tabs defaultActiveKey="info" items={items} />
         </Modal>

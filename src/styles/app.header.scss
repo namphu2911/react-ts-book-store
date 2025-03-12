@@ -89,7 +89,13 @@
         }
         .icon-cart {
             font-size: 20px;
-            top: 5px;
+            top: 3px;
+            position: relative;
+            color: #61dafb;
+        }
+        .icon-user {
+            font-size: 20px;
+            top: 0px;
             position: relative;
             color: #61dafb;
         }
@@ -114,15 +120,13 @@
             display: block;
             opacity: 1;
             height: auto;
+            padding: 0;
             &__item {
                 opacity: 0.8;
                 display: inline-block;
                 &:hover {
                     cursor: pointer;
                     opacity: 1;
-                }
-                &.mobile {
-                    display: none;
                 }
             }
         }

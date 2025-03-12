@@ -79,7 +79,10 @@ const MobileFilter = (props: IProps) => {
                     </Row>
                     <div>
                         <Button
-                            onClick={() => form.submit()}
+                            onClick={() => {
+                                form.submit()
+                                setIsOpen(false)
+                            }}
                             type="primary"
                             style={{ width: '100%' }}
                         >
