@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCurrentApp } from "components/context/app.context";
-import { Avatar, Divider, Dropdown, Layout, Menu, MenuProps, Space } from 'antd';
+import { App, Avatar, Divider, Dropdown, Layout, Menu, MenuProps, Space } from 'antd';
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
     AppstoreOutlined,
@@ -27,6 +27,7 @@ const LayoutAdmin = () => {
     const [openManageAccount, setOpenManageAccount] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+    const { message } = App.useApp();
 
     const handleLogout = async () => {
         const res = await logoutAPI();
@@ -36,6 +37,7 @@ const LayoutAdmin = () => {
             setIsAuthenticated(false);
             localStorage.removeItem('access_token');
             localStorage.removeItem("carts");
+            message.success("Đã đăng xuất thành công");
         }
     }
 
@@ -88,7 +90,7 @@ const LayoutAdmin = () => {
         },
     ];
 
-    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
+    const urlAvatar = user?.avatar.includes("http") ? user?.avatar : `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
 
     if (!isAuthenticated) {
         return (

@@ -17,7 +17,7 @@ const UserDetail = (props: IProps) => {
         setDataUser(null);
     };
 
-    const avatarURL = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${dataUser?.avatar}`;
+    const avatarURL = dataUser?.avatar.includes("http") ? dataUser?.avatar : `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${dataUser?.avatar}`;
 
     return (
         <Drawer

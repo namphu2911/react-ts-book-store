@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import { FaReact } from "react-icons/fa";
 import { VscSearchFuzzy } from "react-icons/vsc";
-import { Avatar, Badge, Divider, Dropdown, Empty, Popover, Space } from "antd";
+import { App, Avatar, Badge, Divider, Dropdown, Empty, Popover, Space } from "antd";
 import { FiShoppingCart } from "react-icons/fi";
 import 'styles/app.header.scss'
 import { logoutAPI } from "services/api";
@@ -22,6 +22,7 @@ const AppHeader = (props: IProps) => {
     const { user, setUser, isAuthenticated, setIsAuthenticated, carts, setCarts } = useCurrentApp();
     const [openManageAccount, setOpenManageAccount] = useState(false);
     const navigate = useNavigate();
+    const { message } = App.useApp();
 
     const handleLogout = async () => {
         const res = await logoutAPI();
@@ -31,6 +32,7 @@ const AppHeader = (props: IProps) => {
             setIsAuthenticated(false);
             localStorage.removeItem('access_token');
             localStorage.removeItem('carts');
+            message.success("Đã đăng xuất thành công");
         }
     }
 
@@ -61,7 +63,7 @@ const AppHeader = (props: IProps) => {
             key: 'admin',
         })
     }
-    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
+    const urlAvatar = user?.avatar.includes("http") ? user?.avatar : `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
 
     const contentPopover = () => {
         return (

@@ -21,7 +21,7 @@ const UserInfo = () => {
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
     const [userAvatar, setUserAvatar] = useState(user?.avatar ?? "");
 
-    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${userAvatar}`;
+    const urlAvatar = userAvatar.includes("http") ? userAvatar : `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${userAvatar}`;
 
     useEffect(() => {
         if (user) {
