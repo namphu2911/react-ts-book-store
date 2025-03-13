@@ -1,14 +1,14 @@
-
 import createInstanceAxios from "services/axios.customize";
 
 const axios = createInstanceAxios(import.meta.env.VITE_BACKEND_URL);
+const axiosPayment = createInstanceAxios(import.meta.env.VITE_BACKEND_PAYMENT_URL);
 
 const loginAPI = (username: string, password: string) => {
     const urlBackend = "/api/v1/auth/login";
     const data = { username, password }
     return axios.post<IBackendRes<ILogin>>(urlBackend, data, {
         headers: {
-            delay: 2000
+            delay: 500
         }
     });
 }
@@ -28,7 +28,7 @@ const fetchAccountAPI = () => {
     const urlBackend = "/api/v1/auth/account";
     return axios.get<IBackendRes<IFetchAccount>>(urlBackend, {
         headers: {
-            delay: 3000
+            delay: 500
         }
     });
 }
@@ -70,7 +70,7 @@ const getBooksAPI = (query: string) => {
     const urlBackend = `/api/v1/book?${query}`;
     return axios.get<IBackendRes<IModelPaginate<IBookTable>>>(urlBackend, {
         headers: {
-            delay: 1000
+            delay: 500
         }
     });
 }
@@ -126,19 +126,19 @@ const getBookByIdAPI = (id: string) => {
     return axios.get<IBackendRes<IBookTable>>(urlBackend,
         {
             headers: {
-                delay: 3000
+                delay: 500
             }
         }
     )
 }
 
 const createOrderAPI = (
-    fullName: string, address: string,
+    name: string, address: string,
     phone: number, totalPrice: number,
-    type: string, detail: any
+    type: string, detail: object[],
+    paymentRef?: string
 ) => {
-    const name = `${fullName}_${type}`;
-    const data = { name, address, phone, totalPrice, type, detail };
+    const data = { name, address, phone, totalPrice, type, detail, paymentRef };
     const urlBackend = `/api/v1/order`;
     return axios.post<IBackendRes<IOrder>>(urlBackend, data);
 }
@@ -179,6 +179,22 @@ const getDashboardAPI = () => {
     }>>(urlBackend)
 }
 
+const getVNPayUrlAPI = (amount: number, locale: string, paymentRef: string) => {
+    const data = { amount, locale, paymentRef };
+    const urlBackend = "/vnpay/payment-url";
+    return axiosPayment.post<IBackendRes<{ url: string }>>(urlBackend, data);
+}
+
+const updatePaymentOrderAPI = (paymentStatus: string, paymentRef: string) => {
+    const data = { paymentStatus, paymentRef };
+    const urlBackend = "/api/v1/order/update-payment-status";
+    return axios.post<IBackendRes<ILogin>>(urlBackend, data, {
+        headers: {
+            delay: 1000
+        }
+    });
+}
+
 const loginWithGoogleAPI = (type: string, email: string) => {
     const data = { type, email };
     const urlBackend = "/api/v1/auth/social-media";
@@ -192,5 +208,6 @@ export {
     createOrderAPI, getHistoryAPI,
     updateUserInfoAPI, updateUserPasswordAPI,
     getOrdersAPI, getDashboardAPI,
+    getVNPayUrlAPI, updatePaymentOrderAPI,
     loginWithGoogleAPI
 }

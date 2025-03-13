@@ -33,11 +33,18 @@ const HistoryPage = () => {
         },
         {
             title: 'Trạng thái',
-            render: () => (
-                <Tag color={"green"}>
-                    Thành công
+            render: (_item, record) => (
+                <Tag color={
+                    record.paymentStatus === "UNPAID"
+                        ? "volcano" : "green"
+                }>
+                    {record.paymentStatus}
                 </Tag>
             )
+        },
+        {
+            title: 'PaymentRef',
+            dataIndex: 'paymentRef',
         },
         {
             title: 'Chi tiết',

@@ -133,30 +133,12 @@ const TableOrder = () => {
                     const res = await getOrdersAPI(query);
                     if (res.data) {
                         setMeta(res.data.meta);
-
-                        // Handle spilit name and type
-                        const modifiedData = res.data.result.map(order => {
-                            const [name, type] = order.name.includes('_') ? order.name.split('_') : [order.name, order.type];
-                            return {
-                                ...order,
-                                name,
-                                type
-                            };
-                        });
-
-                        return {
-                            data: modifiedData,
-                            page: 1,
-                            success: true,
-                            total: res.data?.meta.total
-                        };
-                    } else {
-                        return {
-                            data: undefined,
-                            page: 1,
-                            success: true,
-                            total: undefined
-                        };
+                    }
+                    return {
+                        data: res.data?.result,
+                        page: 1,
+                        success: true,
+                        total: res.data?.meta.total
                     }
                 }}
                 rowKey="_id"

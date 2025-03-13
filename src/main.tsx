@@ -20,6 +20,7 @@ import enUS from 'antd/es/locale/en_US';
 import OrderPage from 'pages/client/order';
 import HistoryPage from 'pages/client/history';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import ReturnURLPage from 'components/client/order/return.url';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <OrderPage />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/vnpay/return-url",
+        element: (
+          <ProtectedRoute>
+            <ReturnURLPage />
           </ProtectedRoute>
         )
       },
