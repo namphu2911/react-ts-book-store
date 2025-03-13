@@ -1,6 +1,6 @@
 import { Col, Image, Modal, Row } from "antd";
 import { useEffect, useRef, useState } from "react";
-import ReactImageGallery from "react-image-gallery";
+import ImageGallery from "react-image-gallery";
 import 'styles/book.scss';
 
 interface IProps {
@@ -19,7 +19,7 @@ interface IProps {
 const ModalGallery = (props: IProps) => {
     const { isOpen, setIsOpen, currentIndex, items, title } = props;
     const [activeIndex, setActiveIndex] = useState(0);
-    const refGallery = useRef<ReactImageGallery>(null);
+    const refGallery = useRef<ImageGallery>(null);
 
     useEffect(() => {
         if (isOpen) {
@@ -37,7 +37,7 @@ const ModalGallery = (props: IProps) => {
             className="modal-gallery">
             <Row gutter={[20, 20]}>
                 <Col span={16}>
-                    <ReactImageGallery
+                    <ImageGallery
                         ref={refGallery}
                         items={items}
                         showPlayButton={false} //hide play button

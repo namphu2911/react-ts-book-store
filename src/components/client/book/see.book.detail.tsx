@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import ReactImageGallery from "react-image-gallery";
+import ImageGallery from "react-image-gallery";
 import ModalGallery from "components/client/book/modal.gallery";
 import { App, Breadcrumb, Col, Divider, Rate, Row } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
@@ -24,7 +24,7 @@ const SeeBookDetail = (props: IProps) => {
     }[]>([]);
     const [isOpenModalGallery, setIsOpenModalGallery] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const refGallery = useRef<ReactImageGallery>(null);
+    const refGallery = useRef<ImageGallery>(null);
     const [currentQuantity, setCurrentQuantity] = useState<number>(1);
     const { setCarts, user } = useCurrentApp();
     const { message } = App.useApp();
@@ -148,7 +148,7 @@ const SeeBookDetail = (props: IProps) => {
                 <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
                     <Row gutter={[20, 20]}>
                         <Col md={10} sm={0} xs={0}>
-                            <ReactImageGallery
+                            <ImageGallery
                                 ref={refGallery}
                                 items={imageGallery}
                                 showPlayButton={false} //hide play button
@@ -161,7 +161,7 @@ const SeeBookDetail = (props: IProps) => {
                         </Col>
                         <Col md={14} sm={24}>
                             <Col md={0} sm={24} xs={24}>
-                                <ReactImageGallery
+                                <ImageGallery
                                     ref={refGallery}
                                     items={imageGallery}
                                     showPlayButton={false} //hide play button
