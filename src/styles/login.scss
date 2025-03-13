@@ -10,15 +10,19 @@
     --shadow-normal: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --image-bg: url("src/assets/background/aaa.jpg");
 }
+
 .login-page {
     color: var(--color-black);
     background: var(--image-bg);
     background-position: center;
-    background-repeat: no-repeat; /* Đảm bảo hình nền không lặp lại */
-    background-attachment: fixed; /* Cố định hình nền khi cuộn */
-    background-size: cover; /* Đặt kích thước ban đầu cho hình nền */
+    background-repeat: no-repeat;
+    /* Đảm bảo hình nền không lặp lại */
+    background-attachment: fixed;
+    /* Cố định hình nền khi cuộn */
+    background-size: cover;
+
+    /* Đặt kích thước ban đầu cho hình nền */
     /* Các phần CSS khác */
     .container {
         display: flex;
@@ -29,31 +33,37 @@
         padding: 0 2rem;
         margin: 0 auto;
     }
+
     .text {
         font-family: inherit;
         line-height: inherit;
         text-transform: unset;
         text-rendering: optimizeLegibility;
         text-align: center;
+
         &-large {
             font-size: 2rem;
             font-weight: 600;
             color: var(--color-black);
         }
+
         &-normal {
             font-size: 1rem;
             font-weight: 400;
             color: var(--color-black);
         }
+
         &-links {
             font-size: 1rem;
             font-weight: 400;
             color: var(--color-blue);
+
             &:hover {
                 text-decoration: underline;
             }
         }
     }
+
     .main {
         .wrapper {
             max-width: 24rem;
@@ -66,16 +76,19 @@
             color: var(--color-black);
             background: var(--color-white);
             box-shadow: var(--shadow-large);
+
             .form {
                 width: 100%;
                 height: auto;
                 margin-top: 2rem;
+
                 .input-control {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     margin-bottom: 1.25rem;
                 }
+
                 .input-field {
                     font-family: inherit;
                     font-size: 1rem;
@@ -92,6 +105,7 @@
                     text-transform: unset;
                     text-rendering: optimizeLegibility;
                 }
+
                 .input-submit {
                     font-family: inherit;
                     font-size: 1rem;
@@ -111,12 +125,14 @@
                     text-rendering: optimizeLegibility;
                 }
             }
+
             .striped {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
                 margin: 1rem 0;
+
                 &-line {
                     flex: auto;
                     flex-basis: auto;
@@ -125,6 +141,7 @@
                     height: 2px;
                     background: var(--color-grayish);
                 }
+
                 &-text {
                     font-family: inherit;
                     font-size: 1rem;
@@ -134,10 +151,12 @@
                     margin: 0 1rem;
                 }
             }
+
             .method {
                 &-control {
                     margin-bottom: 1rem;
                 }
+
                 &-action {
                     font-family: inherit;
                     font-size: 0.95rem;
@@ -157,6 +176,7 @@
                     text-transform: capitalize;
                     text-rendering: optimizeLegibility;
                     transition: all 0.35s ease;
+
                     &:hover {
                         background: var(--color-light);
                     }
@@ -164,22 +184,26 @@
             }
         }
     }
+
     /* Media queries */
     @media (max-width: 1200px) {
         .login-page {
             background-size: cover;
         }
     }
+
     @media (max-width: 992px) {
         .login-page {
             background-size: cover;
         }
     }
+
     @media (max-width: 768px) {
         .login-page {
             background-size: cover;
         }
     }
+
     @media (max-width: 576px) {
         .login-page {
             background-size: cover;
