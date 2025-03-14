@@ -148,6 +148,7 @@ const SeeBookDetail = (props: IProps) => {
                 <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>
                     <Row gutter={[20, 20]}>
                         <Col md={10} sm={0} xs={0}>
+                            {/* @ts-expect-error Server Component */}
                             <ImageGallery
                                 ref={refGallery}
                                 items={imageGallery}
@@ -161,6 +162,7 @@ const SeeBookDetail = (props: IProps) => {
                         </Col>
                         <Col md={14} sm={24}>
                             <Col md={0} sm={24} xs={24}>
+                                {/* @ts-expect-error Server Component */}
                                 <ImageGallery
                                     ref={refGallery}
                                     items={imageGallery}

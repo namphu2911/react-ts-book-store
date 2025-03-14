@@ -275,6 +275,7 @@ const TableBook = () => {
                 dateFormatter="string"
                 headerTitle="Table Book"
                 toolBarRender={() => [
+                    // @ts-expect-error Server Component
                     <CSVLink
                         data={currentDataTable}
                         filename={"book-data-export.csv"}

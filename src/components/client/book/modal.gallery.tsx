@@ -37,6 +37,7 @@ const ModalGallery = (props: IProps) => {
             className="modal-gallery">
             <Row gutter={[20, 20]}>
                 <Col span={16}>
+                    {/* @ts-expect-error Server Component */}
                     <ImageGallery
                         ref={refGallery}
                         items={items}

@@ -240,6 +240,7 @@ const TableUser = () => {
                 dateFormatter="string"
                 headerTitle="Table user"
                 toolBarRender={() => [
+                    // @ts-expect-error Server Component
                     <CSVLink
                         data={currentDataTable}
                         filename={"user-data-export.csv"}
