@@ -57,12 +57,25 @@ const AppProvider = (props: IProps) => {
                     position: "fixed",
                     top: "50%",
                     left: "50%",
-                    transform: "translate(-50%, -50%)"
+                    transform: "translate(-50%, -50%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "16px"
                 }}>
                     <PuffLoader
                         size={200}
                         color="#36d6b4"
                     />
+                    <p style={{
+                        color: "#36d6b4",
+                        fontSize: "16px",
+                        fontWeight: 500,
+                        textAlign: "center",
+                        margin: 0
+                    }}>
+                        Connecting to server, please wait...
+                    </p>
                 </div>
             }
         </>
